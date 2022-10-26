@@ -22,7 +22,7 @@ export default function CardVideo({ tumbnail = '/images/tumbnail.jpg' }) {
                         {/* <!-- Profile Picture --> */}
                         <Link href="/profile/samansayyar">
                             <div className="relative">
-                                <Image src="/images/samansayyar.jpeg" width={'40'} className="rounded-full max-h-10 object-cover max-w-10" height={'40'} />
+                                <Image alt="image placeholder" src="/images/samansayyar.jpeg" width={'40'} className="rounded-full max-h-10 object-cover max-w-10" height={'40'} />
                             </div>
                         </Link>
 

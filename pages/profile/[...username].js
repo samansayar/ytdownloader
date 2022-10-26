@@ -21,12 +21,12 @@ export default function Username() {
             <Head><title>profile {username} - Youtube</title></Head>
             <Main withoutPadding={true}>
                 <div className='w-ful relative'>
-                    <Image src={Banner} height={'230'} className='object-cover w-full h-full' />
+                    <Image alt="image placeholder" src={Banner} height={'230'} className='object-cover w-full h-full' />
                 </div>
                 <div dir='ltr' className='bg-white/80 lg:h-36 h-40 flex flex-col lg:pl-20 pt-4 pb-0'>
                     <div className='flex items-center w-full justify-between'>
                         <div className='flex items-center'>
-                            <div className='relative'><Image height={'74'} width={'74'} src={Avatar}
+                            <div className='relative'><Image alt="image placeholder" height={'74'} width={'74'} src={Avatar}
                                 className={'w-full h-full rounded-full object-cover'} /></div>
 
                             <div className='flex justify-center flex-col mx-5'>
@@ -61,7 +61,9 @@ export default function Username() {
                     {/* Videos */}
                     <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
                         {[1, 2, 3, 4, 5, 6, 7, 8].map((res, index) => (
-                            <CardVideo tumbnail='/images/cat-dock.jpeg' />
+                            <div key={index}>
+                                <CardVideo tumbnail='/images/cat-dock.jpeg' />
+                            </div>
                         ))}
                     </div>
                 </div>

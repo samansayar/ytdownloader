@@ -14,11 +14,11 @@ export default function Slug() {
             <Head><title>Category {slug} - Yoututbe</title></Head>
             <Main withoutPadding={true}>
                 <div className='w-ful relative'>
-                    <Image src={Banner} height={'230'} className='object-cover w-full h-full' />
+                    <Image alt="image placeholder" src={Banner} height={'230'} className='object-cover w-full h-full' />
                 </div>
                 <div dir='ltr' className='bg-white/80 h-36 flex flex-col lg:pl-20 pl-2 pt-4 pb-0'>
                     <div className='flex items-center'>
-                        <div className='relative'><Image height={'74'} width={'74'} src={Avatar}
+                        <div className='relative'><Image alt="image placeholder" height={'74'} width={'74'} src={Avatar}
                             className={'w-full h-full rounded-full object-cover'} /></div>
 
                         <div className='flex justify-center flex-col mx-5'>
@@ -42,7 +42,9 @@ export default function Slug() {
                     {/* Videos */}
                     <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
                         {[1,2,3,4,5,6,7,8].map((res, index) => (
-                            <CardVideo />
+                            <div key={index}>
+                                <CardVideo />
+                            </div>
                         ))}
                     </div>
                 </div>
