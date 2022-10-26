@@ -12,7 +12,7 @@ export default function CardListVideo({ res, index }) {
         <div className="relative">
           {/* <!-- Image Video --> */}
           <a href="#">
-            <Image src="/images/tumbnail.jpg" className="w-24 object-cover h-16" />
+            <Image src="/images/tumbnail.jpg" className="w-24 object-cover h-16" alt="image profile" />
           </a>
 
           <p className="absolute right-1 bottom-2 bg-gray-900 text-gray-100 text-[11px] px-2 rounded-sm py-0.5">1:15</p>

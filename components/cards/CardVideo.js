@@ -11,7 +11,7 @@ export default function CardVideo({ tumbnail = '/images/tumbnail.jpg' }) {
                     <div className="relative">
                         {/* <!-- Image Video --> */}
                         <a href="#">
-                            <Image src={tumbnail} className="w-96 object-cover h-48" />
+                            <Image src={tumbnail} className="w-96 object-cover h-48" alt="image profile" />
                         </a>
 
                         <p className="absolute right-2 bottom-2 bg-gray-900 text-gray-100 text-xs px-2 rounded-md py-1">1:15</p>
