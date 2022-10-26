@@ -23,7 +23,7 @@ const NavBar = () => {
         <div className="flex items-center justify-center">
           <div className="mx-8 flex h-full items-center">
             <p className="mx-1 font-bold text-gray-600">Youtube</p>
-            <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full" alt="logo" />
+            <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full"  />
           </div>
           <button onClick={() => setToggle(toggle => !toggle)}>
             <svg className="w-7 h-7 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -39,7 +39,7 @@ const NavBar = () => {
               </button>
               <Link href="/">
                 <div className="mx-8 flex h-full items-center">
-                  <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full" alt="logo" />
+                  <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full" />
                   <p className="mx-1 font-bold text-gray-600">Youtube</p>
                 </div>
               </Link>

@@ -12,7 +12,7 @@ export default function ItemMenu() {
         <div dir='rtl'>
             <div className='mt-2 space-y-1'>
                 {Items.map((item, index) => (
-                    <Link href={item.href}>
+                    <Link key={index} href={item.href}>
                         <div className='py-3 px-2 justify-end flex font-light transition-all cursor-pointer duration-150 hover:bg-gray-200 rounded-md hover:text-black text-gray-800 w-full'>
                             <p className='capitalize'>{item.title}</p>
                             <Icon type={item.title} />
