@@ -135,7 +135,7 @@ export default function SingleVideo() {
                 <div className="flex flex-row justify-between items-center">
                   <div className="flex justify-center items-center">
                     <div className="w-full">
-                      <Image alt="image placeholder" width={'40'} height={'40'} src="/images/samansayyar.jpeg" alt="picture user" className="shadow-md object-cover rounded-full w-full h-full" />
+                      <Image width={'40'} height={'40'} src="/images/samansayyar.jpeg" alt="picture user" className="shadow-md object-cover rounded-full w-full h-full" />
                     </div>
                     <div className="flex mx-3 flex-col justify-center items-start mb-1">
                       <p className="text-gray-800 capitalize w-40 md:text-md text-sm mb-1">saman sayyar</p>
