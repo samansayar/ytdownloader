@@ -5,7 +5,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import CardExplore from "../cards/CardExplore";
 import CardVideo from "../cards/CardVideo";
-import { data } from "autoprefixer";
 
 
 export default function Header() {
@@ -47,6 +46,10 @@ export default function Header() {
       "title": "trending"
     },
   ]
+  const params = {
+    slidesPerView: 4,
+    spaceBetween: 20,
+  }
   return (
     <div className="w-full">
       {/* Subscripition */}
@@ -76,9 +79,9 @@ export default function Header() {
         <section className="mt-10 w-full relative">
           <div dir="ltr" className="grid place-content-center place-items-center grid-cols-12 gap-2 gap-y-4 w-full mt-6">
             {Items.sort((a, b) => a > b ? -1 : (a > b ? 1 : 0)).map((data, index) => (
-              <div key={index}>
+           
                 <CardVideo />
-              </div>
+              // </div>
             ))}
           </div>
         </section>
