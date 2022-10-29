@@ -43,7 +43,7 @@ export default function Slug() {
                     <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
                         {[1,2,3,4,5,6,7,8].map((res, index) => (
                             <div key={index}>
-                                <CardVideo />
+                                <CardVideo key={index} />
                             </div>
                         ))}
                     </div>
