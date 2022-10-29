@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export default function CardVideo({ tumbnail = '/images/tumbnail.jpg' }) {
+export default function CardVideo({ tumbnail = '/images/tumbnail.jpg', index }) {
     const parameter = 'Learn-CSS-Box-Model-in-8-Minutes';
     return (
-        <Link href={'video/' + parameter.toLocaleLowerCase()}>
+        <Link key={index} href={'video/' + parameter.toLocaleLowerCase()}>
             <div className="col-span-12 sm:col-span-6 hover:bg-gray-50 transition duration-200 pb-2 md:col-span-3">
                 <card className="w-full flex flex-col">
                     <div className="relative">

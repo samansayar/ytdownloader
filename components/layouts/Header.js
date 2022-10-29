@@ -79,9 +79,7 @@ export default function Header() {
         <section className="mt-10 w-full relative">
           <div dir="ltr" className="grid place-content-center place-items-center grid-cols-12 gap-2 gap-y-4 w-full mt-6">
             {Items.sort((a, b) => a > b ? -1 : (a > b ? 1 : 0)).map((data, index) => (
-           
-                <CardVideo />
-              // </div>
+              <CardVideo key={index} />
             ))}
           </div>
         </section>
