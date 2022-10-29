@@ -63,9 +63,19 @@ export default function SingleVideo() {
               </div>
               <div className='h-96 space-y-1 scrollbar-hide pb-4 pt-2 overflow-y-auto w-full flex flex-col'>
                 <div className='rtl:block ltr:hidden'></div>
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((res, index) => (
-                    <CardListVideo res={res} index={index} />
-                ))}
+                {/* {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((res, index) => ( */}
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                    <CardListVideo  />
+                {/* ))} */}
               </div>
             </div>
           </div>

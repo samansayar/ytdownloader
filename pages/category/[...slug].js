@@ -41,8 +41,8 @@ export default function Slug() {
                     </h2>
                     {/* Videos */}
                     <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
-                        {[1,2,3,4,5,6,7,8].map((res, index) => (
-                                <CardVideo key={index} />
+                        {[1, 2, 3, 4, 5, 6, 7, 8].map((res, index) => (
+                            <CardVideo key={index} />
                         ))}
                     </div>
                 </div>
