@@ -14,12 +14,13 @@
   font-family: "estedad-bolish";
   src: url('../public/fonts/estedad/Estedad[wght\,kshd].ttf');
 }
+
 @font-face {
   font-family: "estedad-bolisher";
   src: url('../public/fonts/Estedad-ExtraBold.ttf');
 }
 
 * {
-
-  font-family: Inter,'estedad-bolish';
+  direction: rtl;
+  font-family: Inter, 'estedad-bolish';
 }

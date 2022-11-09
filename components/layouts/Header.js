@@ -1,13 +1,16 @@
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CardSubscrib from '@/components/cards/CardSubscrib';
+// import CardSubscrib from '@/components/cards/CardSubscrib';
 import "swiper/css";
 import "swiper/css/pagination";
 import CardExplore from "../cards/CardExplore";
 import CardVideo from "../cards/CardVideo";
+import CardSubscrib from "../cards/CardSubscrib";
+import { useEffect } from "react";
+import { GetVideo } from "pages/api/getvideo";
 
 
-export default function Header() {
+export default function Header({ getVideo }) {
   const Items = [
     {
       "icon": "https://www.youtube.com/img/explore/destinations/icons/trending_color_64.png",
@@ -46,44 +49,87 @@ export default function Header() {
       "title": "trending"
     },
   ]
-  const params = {
-    slidesPerView: 4,
-    spaceBetween: 20,
-  }
   return (
     <div className="w-full">
       {/* Subscripition */}
-      <section className='w-full relative' dir="ltr">
+      <section className='w-full relative lg:pr-10'>
         <Swiper
-          slidesPerView={4}
-          spaceBetween={20}
+          slidesPerView={1}
+          spaceBetween={13}
           className="mySwiper"
+          breakpoints={{
+            300: {
+              width: 300,
+              slidesPerView: 1,
+            },
+            568: {
+              width: 568,
+              slidesPerView: 2,
+            },
+            970: {
+              width: 970,
+              slidesPerView: 3,
+            },
+          }}
         >
-          {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((res, index) => (
-            <SwiperSlide key={index}>
-              <CardSubscrib />
-            </SwiperSlide>
-          ))}
+
+          <SwiperSlide>
+            <CardSubscrib />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardSubscrib />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardSubscrib />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardSubscrib />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardSubscrib />
+          </SwiperSlide>
         </Swiper>
       </section>
 
       <div className="lg:pr-10">
-        <section dir="ltr" className="mt-10 w-full relative grid gap-[7px] place-content-center items-center lg:grid-cols-6 grid-cols-3">
-          {Items.sort((a, b) => a > b ? -1 : (a > b ? 1 : 0)).map(data => (
-            <>
-              <CardExplore Items={data} />
-            </>
-          ))}
+        <section dir="ltr" className="mt-10 w-full relative grid gap-[7px] place-content-start items-center lg:grid-cols-6 grid-cols-3">
+          {/* {Items.sort((a, b) => a > b ? -1 : (a > b ? 1 : 0)).map((data, index) => ( */}
+          <CardExplore Items={Items[0]} index={1} />
+          <CardExplore Items={Items[1]} index={2} />
+          <CardExplore Items={Items[2]} index={3} />
+          <CardExplore Items={Items[3]} index={4} />
+          <CardExplore Items={Items[4]} index={5} />
+          <CardExplore Items={Items[5]} index={6} />
+
         </section>
 
         <section className="mt-10 w-full relative">
           <div dir="ltr" className="grid place-content-center place-items-center grid-cols-12 gap-2 gap-y-4 w-full mt-6">
-            {Items.sort((a, b) => a > b ? -1 : (a > b ? 1 : 0)).map((data, index) => (
-              <CardVideo key={index} />
-            ))}
+            {/* {getVideo.map((data, index) => ( */}
+            <CardVideo key={1} />
+            <CardVideo key={2} />
+            <CardVideo key={3} />
+            <CardVideo key={4} />
+            <CardVideo key={5} />
+            <CardVideo key={6} />
+            {/* ))} */}
           </div>
         </section>
       </div>
     </div>
   )
 }
+
+
+// export async function getServerSideProps(context) {
+//   const { params, req, res } = context;
+//   const getVideo = await GetVideo();
+//   if (!dataVideo) {
+//     return {
+//       notFound: true,
+//     }
+//   }
+//   return {
+//     props: { getVideo }, // will be passed to the page component as props
+//   }
+// }

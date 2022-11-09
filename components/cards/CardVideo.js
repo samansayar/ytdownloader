@@ -6,7 +6,7 @@ export default function CardVideo({ tumbnail = '/images/tumbnail.jpg', index }) 
     const parameter = 'Learn-CSS-Box-Model-in-8-Minutes';
     return (
         <Link key={index} href={'video/' + parameter.toLocaleLowerCase()}>
-            <div className="col-span-12 sm:col-span-6 hover:bg-gray-50 transition duration-200 pb-2 md:col-span-3">
+            <div className="col-span-12 sm:col-span-6 dark:hover:bg-slate-900 hover:bg-gray-50 transition duration-200 pb-2 md:col-span-3 dark:border-b dark:border-l border-slate-700">
                 <card className="w-full flex flex-col">
                     <div className="relative">
                         {/* <!-- Image Video --> */}
@@ -29,12 +29,12 @@ export default function CardVideo({ tumbnail = '/images/tumbnail.jpg', index }) 
                         {/* <!-- Description --> */}
                         <div clas="flex flex-col">
                             <a href="#">
-                                <p className="text-gray-800 text-sm font-semibold">Learn CSS Box Model in 8 Minutes</p>
+                                <p className="dark:text-slate-100 text-gray-800 text-sm font-semibold">Learn CSS Box Model in 8 Minutes</p>
                             </a>
                             <Link href="/profile/samansayyar">
-                                <a className="text-gray-500 text-xs mt-2 hover:text-gray-900 capitalize" href="#"> samansayyar dev </a>
+                                <a className="dark:text-slate-300 text-gray-500 text-xs mt-2 hover:text-gray-900 capitalize" href="#"> samansayyar dev </a>
                             </Link>
-                            <p className="text-gray-500 text-xs mt-1">241K views . 2 years ago</p>
+                            <p className="text-gray-500 dark:text-slate-400 text-xs mt-1">241K views . 2 years ago</p>
                         </div>
 
                     </div>

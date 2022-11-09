@@ -16,23 +16,23 @@ export default function Slug() {
                 <div className='w-ful relative'>
                     <Image alt="image placeholder" src={Banner} height={'230'} className='object-cover w-full h-full' />
                 </div>
-                <div dir='ltr' className='bg-white/80 h-36 flex flex-col lg:pl-20 pl-2 pt-4 pb-0'>
-                    <div className='flex items-center'>
+                <div dir='ltr' className='bg-white/80 lg:h-44 dark:bg-slate-900 flex flex-col lg:pr-10  pt-4 pb-0'>
+                    <div className='flex items-center h-full w-full'>
                         <div className='relative'><Image alt="image placeholder" height={'74'} width={'74'} src={Avatar}
                             className={'w-full h-full rounded-full object-cover'} /></div>
 
                         <div className='flex justify-center flex-col mx-5'>
-                            <p className='text-xl text-gray-800 capitalize'>news</p>
-                            <p className='text-gray-500 text-sm mt-0.5'>36.2M subscribers</p>
+                            <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>news</p>
+                            <p className='text-gray-500 dark:text-slate-300 text-[12px] mt-0.5'>36.2M subscribers</p>
                         </div>
                     </div>
                     {/* Tab */}
                     <div className='mx-2 h-full flex items-end space-x-8'>
-                        <p className='uppercase text-gray-600 pb-3 text-sm border-b-[2px] w-20 flex justify-center items-center border-gray-600'>Home</p>
-                        <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600'>channels</p>
+                        <p className='uppercase text-gray-600 pb-3 text-sm border-b-[2px] w-20 flex justify-center items-center border-gray-600 dark:text-slate-400'>خانه</p>
+                        <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'>کانال </p>
                     </div>
                 </div>
-                <div dir='ltr' className='mt-6 pl-20 pr-10 w-full pb-10 text-gray-600'>
+                <div dir='ltr' className='mt-6 pl-20 pr-10 w-full pb-10 dark:text-slate-300 text-gray-600'>
                     <h2 className='capitalize flex font-medium items-cenetr'>
                         <span>Top Stories</span>
                         <span className='ml-4'>

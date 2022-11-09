@@ -2,20 +2,20 @@ import Link from 'next/link'
 import React from 'react'
 
 const Items = [
-    { 'title': 'home', 'href': '/' },
-    { 'title': 'explore', 'href': '/explore' },
-    { 'title': 'shorts', 'href': '/shorts' },
-    { 'title': 'subscripition', 'href': '/subscripition' },
+    { 'title': 'خانه', 'icon': 'home', 'href': '/' },
+    { 'title': 'اکسپلور', 'icon': 'explore', 'href': '/explore' },
+    { 'title': 'ویدیوهای کوتاه', 'icon': 'shorts', 'href': '/shorts' },
+    { 'title': 'مشترک های شما', 'icon': 'subscripition', 'href': '/subscripition' },
 ]
 export default function ItemMenu() {
     return (
         <div dir='rtl'>
-            <div className='mt-2 space-y-1'>
+            <div className='mt-2 space-y-2'>
                 {Items.map((item, index) => (
                     <Link key={index} href={item.href}>
-                        <div className='py-3 px-2 justify-end flex font-light transition-all cursor-pointer duration-150 hover:bg-gray-200 rounded-md hover:text-black text-gray-800 w-full'>
+                        <div className='py-3 px-2 justify-start flex font-light dark:text-white transition-all cursor-pointer duration-150 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-md dark:hover:text-slate-200  hover:text-black text-slate-600 w-full'>
+                            <Icon type={item.icon} />
                             <p className='capitalize'>{item.title}</p>
-                            <Icon type={item.title} />
                         </div>
                     </Link>
                 ))}
