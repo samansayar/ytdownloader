@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { GetVideo } from "pages/api/getvideo";
 
 
-export default function Header({ getVideo }) {
+export default function Header({ AllVideo }) {
   const Items = [
     {
       "icon": "https://www.youtube.com/img/explore/destinations/icons/trending_color_64.png",
@@ -90,7 +90,6 @@ export default function Header({ getVideo }) {
           </SwiperSlide>
         </Swiper>
       </section>
-
       <div className="lg:pr-10">
         <section dir="ltr" className="mt-10 w-full relative grid gap-[7px] place-content-start items-center lg:grid-cols-6 grid-cols-3">
           {/* {Items.sort((a, b) => a > b ? -1 : (a > b ? 1 : 0)).map((data, index) => ( */}
@@ -104,32 +103,13 @@ export default function Header({ getVideo }) {
         </section>
 
         <section className="mt-10 w-full relative">
-          <div dir="ltr" className="grid place-content-center place-items-center grid-cols-12 gap-2 gap-y-4 w-full mt-6">
-            {/* {getVideo.map((data, index) => ( */}
-            <CardVideo key={1} />
-            <CardVideo key={2} />
-            <CardVideo key={3} />
-            <CardVideo key={4} />
-            <CardVideo key={5} />
-            <CardVideo key={6} />
-            {/* ))} */}
+          <div dir="ltr" className="grid place-content-center place-items-center grid-cols-12 gap-y-4 w-full mt-6">
+            {AllVideo.map((data, index) => (
+              <CardVideo data={data} key={index} />
+            ))}
           </div>
         </section>
       </div>
     </div>
   )
 }
-
-
-// export async function getServerSideProps(context) {
-//   const { params, req, res } = context;
-//   const getVideo = await GetVideo();
-//   if (!dataVideo) {
-//     return {
-//       notFound: true,
-//     }
-//   }
-//   return {
-//     props: { getVideo }, // will be passed to the page component as props
-//   }
-// }

@@ -6,12 +6,12 @@ import React, { useEffect, useRef } from 'react'
 import plyr from 'plyr'
 import 'plyr/dist/plyr.css'
 import Image from 'next/image';
+import { data } from 'autoprefixer';
 
-export default function SingleVideo() {
+export default function SingleVideo({ video, getPlaylist }) {
   const router = useRouter();
   const { id } = router.query
   const player = useRef();
-
   useEffect(() => {
     const options = {};
     player.current = plyr.setup('#plyr-player', options);
@@ -33,6 +33,7 @@ export default function SingleVideo() {
       </Head>
 
       <Main hiddenSidebar={true}>
+
         <div className='flex w-full lg:flex-row flex-col-reverse items-cenetr relative'>
           {/* List Video */}
           <div className='w-full lg:w-3/12 h-full relative lg:p-2'>
@@ -63,31 +64,32 @@ export default function SingleVideo() {
               </div>
               <div className='h-96 space-y-1 scrollbar-hide pb-4 pt-2 overflow-y-auto w-full flex flex-col'>
                 <div className='rtl:block ltr:hidden'></div>
-                {/* {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((res, index) => ( */}
-                    <CardListVideo  />
-                    <CardListVideo  />
-                    <CardListVideo  />
-
-                {/* ))} */}
+                {getPlaylist.map((res, index) => (
+                  <CardListVideo data={res} key={index} />
+                ))}
               </div>
             </div>
           </div>
 
           {/* Watch Video selected */}
           <div className='w-full lg:w-9/12 lg:p-2 h-full relative'>
-            <div className="relative w-full lg:h-[530px]">
-              <video id="plyr-player" ref={player} width={'500'} controls src="/videos/taekwondo.mp4" className="w-full h-full" />
+            <div className="relative w-full ">
+              <div className="w-full relative h-full">
+                <iframe className='w-full' height="650" src={video.video_url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              </div>
+
             </div>
             {/* Details Video Description */}
             <div className="w-full mt-6" dir='ltr'>
               <div className="flex md:flex-row flex-col justify-between md:space-y-1 space-y-3 border-b border-gray-300 dark:border-slate-600 pb-2">
                 <div className="flex flex-col pb-2 jsutify-between">
                   <div className="flex flex-col w-full">
-                    <h3 className="md:text-md text-sm text-gray-900 dark:text-slate-200">ویدیو راه اول قسمت اول
-                      (Coming Soon)</h3>
+                    <h3 className="md:text-md text-sm text-gray-900 dark:text-slate-200">
+                      {video.video_metadata.items[0].snippet.localized.title}
+                    </h3>
                   </div>
                   <div className="mt-3 text-gray-500 dark:text-slate-300 md:text-sm text-xs">
-                    147,222 views &nbsp; Jul 6, 2021
+                    <span>{video.view_count}</span> <span>views</span>
                   </div>
                 </div>
 
@@ -122,7 +124,7 @@ export default function SingleVideo() {
                       <span className="mx-1 capitalize">اشتراک گذاری</span>
                       <svg className="md:w-6 md:h-6 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" strokeLinejoin="round" strokeWidth="2"
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                           d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
                         </path>
                       </svg>
@@ -151,10 +153,10 @@ export default function SingleVideo() {
                   </div>
                 </div>
 
-                <div className="m-3 mt-6">
-                  <p className="flex w-full h-full relative text-gray-800 dark:text-slate-200  font-base md:text-md text-sm">
-                    Description og this great Video 😍
-                  </p>
+                <div className="m-3 mt-6 w-full">
+                  <pre className="flex w-full h-full relative text-gray-800 dark:text-slate-200  font-base md:text-md text-sm">
+                    {video.video_metadata.items[0].snippet.localized.description}
+                  </pre>
                 </div>
               </div>
             </div>
@@ -164,4 +166,25 @@ export default function SingleVideo() {
 
     </div>
   )
+}
+export async function getServerSideProps({ params }) {
+  const { id } = params;
+
+  const result = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_id=${id[0]}`);
+  const video = await result.json();
+
+  const resultgetPlaylist = await fetch(`https://rasmlink.ir/api-v1/youtube_playlists?playlist_id=${video[0].video_playlist_id}`);
+  const getPlaylist = await resultgetPlaylist.json();
+  if (!video) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: {
+      video: video[0],
+      getPlaylist,
+    },
+  }
 }

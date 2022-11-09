@@ -2,8 +2,9 @@ import NavBar from '../components/NavBar'
 import Head from 'next/head'
 import Main from '@/components/layouts/Main'
 import Header from '../components/layouts/Header'
+import { useEffect } from 'react'
 
-export default function Home() {
+export default function Home({ AllVideo }) {
   return (
     <div className='relative'>
       <Head>
@@ -12,8 +13,25 @@ export default function Home() {
         <link rel="icon" href="/youtube-svgrepo-com.svg" />
       </Head>
       <Main>
-        <Header />
+        <Header AllVideo={AllVideo} />
       </Main>
     </div>
   )
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`https://rasmlink.ir/api-v1/youtube_videos`);
+  const AllVideo = await res.json();
+
+  if (!AllVideo) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: {
+      AllVideo,
+    },
+  }
 }
