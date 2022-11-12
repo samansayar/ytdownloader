@@ -154,33 +154,37 @@ export default function SingleVideo({ video, getPlaylist }) {
                 </div>
 
                 <div className="m-3 mt-6 w-full">
-                  <pre className="flex w-full h-full relative text-gray-800 dark:text-slate-200  font-base md:text-md text-sm">
+                  <p className="flex w-4/6 leading-8 h-full relative text-gray-800 dark:text-slate-200  font-base md:text-md text-sm">
                     {video.video_metadata.items[0].snippet.localized.description}
-                  </pre>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Main>
-
     </div>
   )
 }
 export async function getServerSideProps({ params }) {
   const { id } = params;
-
-  const result = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_id=${id[0]}`);
+  const result = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_id=${id[0]}`, {
+    headers: {
+      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+    }
+  });
   const video = await result.json();
-
-  const resultgetPlaylist = await fetch(`https://rasmlink.ir/api-v1/youtube_playlists?playlist_id=${video[0].video_playlist_id}`);
+  const resultgetPlaylist = await fetch(`https://rasmlink.ir/api-v1/youtube_playlists?playlist_id=${video[0].video_playlist_id}`, {
+    headers: {
+      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+    }
+  });
   const getPlaylist = await resultgetPlaylist.json();
   if (!video) {
     return {
       notFound: true,
     }
   }
-
   return {
     props: {
       video: video[0],

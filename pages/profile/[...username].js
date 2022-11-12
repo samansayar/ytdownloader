@@ -5,20 +5,21 @@ import Banner from '@/public/images/Sprinkle.svg';
 import Avatar from '@/public/images/samansayyar.jpeg';
 import Image from 'next/image';
 import CardVideo from '@/components/cards/CardVideo';
+import { useEffect } from 'react';
 
 const Tabs = [
     { 'title': 'خانه' },
-    { 'title': 'ویدیو ها' },
-    { 'title': 'لیست پخش' },
-    { 'title': 'درباره' }
+    // { 'title': 'ویدیو ها' },
+    // { 'title': 'لیست پخش' },
+    // { 'title': 'درباره' }
 ]
 
-export default function Username() {
+export default function Username({ data, AllVideo }) {
     const route = useRouter();
-    const { username } = route.query;
+    console.log(AllVideo)
     return (
         <div className='relative'>
-            <Head><title>profile {username} - Youtube</title></Head>
+            <Head><title>profile {data?.channel_title} - Youtube</title></Head>
             <Main withoutPadding={true}>
                 <div className='w-full relative'>
                     <Image alt="image placeholder" src={Banner} height={'230'} className='object-cover w-full h-full' />
@@ -26,12 +27,17 @@ export default function Username() {
                 <div dir='ltr' className='bg-white/80 dark:bg-slate-900 lg:h-36 h-40 flex flex-col lg:pl-20 pt-4 pb-0'>
                     <div className='flex items-center w-full justify-between'>
                         <div className='flex items-center'>
-                            <div className='relative'><Image alt="image placeholder" height={'74'} width={'74'} src={Avatar}
+                            <div className='relative'><Image alt="image placeholder" height={'74'} width={'74'}
+                                src={data?.channel_metadata.items[0].snippet.thumbnails.high.url}
                                 className={'w-full h-full rounded-full object-cover'} /></div>
 
                             <div className='flex justify-center flex-col mx-5'>
-                                <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>سامان سیار</p>
-                                <p className='text-gray-500 dark:text-slate-300 text-[12px] mt-0.5'>3.19K مشترک</p>
+                                <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>
+                                    {data?.channel_title}
+                                </p>
+                                <p className='text-gray-500 dark:text-slate-300 text-[12px] mt-0.5'>
+                                    {data?.channel_metadata.items[0].statistics.subscriberCount + '  '}
+                                    مشترک</p>
                             </div>
                         </div>
                         <div className='lg:pr-10'>
@@ -52,20 +58,64 @@ export default function Username() {
                     </div>
                 </div>
                 <div dir='ltr' className='mt-6 pl-20 pr-10 w-full pb-10 text-gray-600 dark:text-slate-300'>
-                    <h2 className='capitalize flex font-medium items-cenetr'>
-                        <span>Top Stories</span>
-                        <span className='ml-4'>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </span>
-                    </h2>
                     {/* Videos */}
-                    <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((res, index) => (
-                            <CardVideo key={index} tumbnail='/images/cat-dock.jpeg' />
-                        ))}
-                    </div>
+                    {AllVideo.length > 0 ? (
+                        AllVideo.map((res, index) => (
+                            <div className='w-full relative' key={index}>
+                                <h2 className='capitalize flex font-medium items-cenetr'>
+                                    <span>Top Stories</span>
+                                    <span className='ml-4'>
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    </span>
+                                </h2>
+                                <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
+                                    <CardVideo data={res} index={index} />
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className='p-10 w-full flex justify-between items-center text-gray-۷00 text-xl'>
+                            ویدیویی اپلود نکرده است
+                        </div>
+                    )}
                 </div>
             </Main>
         </div>
     )
+}
+
+export async function getServerSideProps({ params }) {
+
+    const { username } = params;
+    // Get All Profile Data
+    const resProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_channels?channel_id=${username[0]}`,{
+        headers : {
+          "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+        }
+      });
+    const AllProfile = await resProfile.json();
+
+    // Get All Profile Data
+    const ResVideoProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_channel_id=${username[0]}&is_special=true`,{
+        headers : {
+          "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+        }
+      });
+    const AllVideo = await ResVideoProfile.json();
+
+    if (!AllVideo && !AllProfile) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+              },
+        }
+    }
+
+    return {
+        props: {
+            data: AllProfile[0],
+            AllVideo
+        }
+    }
 }

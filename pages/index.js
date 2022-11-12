@@ -4,7 +4,8 @@ import Main from '@/components/layouts/Main'
 import Header from '../components/layouts/Header'
 import { useEffect } from 'react'
 
-export default function Home({ AllVideo }) {
+export default function Home({ AllVideo, AllCategory, AllChannel }) {
+  // console.log(AllVideo, AllCategory, AllChannel)
   return (
     <div className='relative'>
       <Head>
@@ -13,25 +14,52 @@ export default function Home({ AllVideo }) {
         <link rel="icon" href="/youtube-svgrepo-com.svg" />
       </Head>
       <Main>
-        <Header AllVideo={AllVideo} />
+        <Header AllVideo={AllVideo} AllCategory={AllCategory} AllChannel={AllChannel} />
       </Main>
     </div>
   )
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(`https://rasmlink.ir/api-v1/youtube_videos`);
-  const AllVideo = await res.json();
+  // Get All Video
+  const resvideo = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?is_special=true`, {
+    headers: {
+      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+    }
+  });
+  const AllVideo = await resvideo.json();
 
-  if (!AllVideo) {
+  // Get All Category
+  const resCategory = await fetch(`https://rasmlink.ir/api-v1/video_categories`, {
+    headers: {
+      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+    }
+  });
+  const AllCategory = await resCategory.json();
+
+  // Get All Channel
+  const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels`, {
+    headers: {
+      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+    }
+  });
+  const AllChannel = await resChannel.json();
+  // console.log('AllChannel', AllChannel)
+
+  if (!AllVideo && !AllCategory && !AllChannel) {
     return {
-      notFound: true,
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
     }
   }
 
   return {
     props: {
       AllVideo,
+      AllCategory,
+      AllChannel,
     },
   }
 }

@@ -2,16 +2,18 @@ import Main from '@/components/layouts/Main';
 import Head from 'next/head';
 import { useRouter } from 'next/router'
 import Banner from '@/public/images/Sprinkle.svg';
-import Avatar from '@/public/images/samansayyar.jpeg';
+import Avatar from '@/public/images/Sprinkle.svg';
 import Image from 'next/image';
 import CardVideo from '@/components/cards/CardVideo';
 
-export default function Slug() {
+export default function Slug({ AllProfile }) {
     const route = useRouter();
     const { slug } = route.query;
+    console.log(AllProfile)
+    // const { slug } = route.query;
     return (
         <div>
-            <Head><title>Category {slug} - Yoututbe</title></Head>
+            <Head><title>دسته بندی های {slug[1]} - Yoututbe</title></Head>
             <Main withoutPadding={true}>
                 <div className='w-ful relative'>
                     <Image alt="image placeholder" src={Banner} height={'230'} className='object-cover w-full h-full' />
@@ -22,8 +24,8 @@ export default function Slug() {
                             className={'w-full h-full rounded-full object-cover'} /></div>
 
                         <div className='flex justify-center flex-col mx-5'>
-                            <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>news</p>
-                            <p className='text-gray-500 dark:text-slate-300 text-[12px] mt-0.5'>36.2M subscribers</p>
+                            <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>{slug[1]}</p>
+                            {/* <p className='text-gray-500 dark:text-slate-300 text-[12px] mt-0.5'>36.2M subscribers</p> */}
                         </div>
                     </div>
                     {/* Tab */}
@@ -33,6 +35,7 @@ export default function Slug() {
                     </div>
                 </div>
                 <div dir='ltr' className='mt-6 pl-20 pr-10 w-full pb-10 dark:text-slate-300 text-gray-600'>
+
                     <h2 className='capitalize flex font-medium items-cenetr'>
                         <span>Top Stories</span>
                         <span className='ml-4'>
@@ -41,12 +44,47 @@ export default function Slug() {
                     </h2>
                     {/* Videos */}
                     <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((res, index) => (
-                            <CardVideo key={index} />
-                        ))}
+                        {AllProfile.length > 0 ? (
+                            AllProfile.map((res, index) => (
+                                <CardVideo data={res} key={index} />
+                            ))
+                        ) : (
+                            <div></div>
+                        )}
                     </div>
                 </div>
             </Main>
         </div>
     )
+}
+
+export async function getServerSideProps({ params }) {
+
+    const { slug } = params;
+    // Get All Profile Data
+    const resProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=${slug[0]}&is_special=true`, {
+        headers: {
+            "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+        }
+    });
+    const AllProfile = await resProfile.json();
+
+    // Get All Profile Data
+    // const ResVideoProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_channel_id=${slug[0]}&is_special=true`);
+    // const AllVideo = await ResVideoProfile.json();
+
+    if (!AllProfile) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+
+    return {
+        props: {
+            AllProfile,
+        }
+    }
 }

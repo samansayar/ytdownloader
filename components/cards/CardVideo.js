@@ -5,16 +5,15 @@ import { format } from 'path';
 import React from 'react'
 
 export default function CardVideo({ data, index }) {
-  const parameter = 'Learn-CSS-Box-Model-in-8-Minutes';
   return (
-   
-      <Link key={index} href={'video/' + data?.video_id}>
+      <Link href={'/video/' + data?.video_id} key={index}>
         <div className="col-span-12 cursor-pointer sm:col-span-6 dark:hover:bg-slate-900 hover:bg-gray-50 transition duration-200 pb-2 md:col-span-3 dark:border-b dark:border-l border-slate-700 px-2">
           <div className="w-full flex flex-col">
             <div className="relative">
               {/* <!-- Image Video --> */}
-              <Link href={'video/' + data?.video_id}>
+              <Link href={'/video/' + data?.video_id}>
                 <div>
+                {/* this[0].video_metadata.items[0].snippet.thumbnails.maxres.url */}
                   <Image src={data?.video_metadata.items[0].snippet.thumbnails.high.url} className="w-96 object-cover h-48" alt="image profile" width="370px" height={'220px'} />
                 </div>
               </Link>
@@ -33,9 +32,9 @@ export default function CardVideo({ data, index }) {
 
               {/* <!-- Description --> */}
               <div clas="flex flex-col">
-                <Link href={'video/' + data?.video_id}>
+                <Link href={'/video/' + data?.video_id}>
                   <p className="dark:text-slate-100 text-gray-800 text-sm font-medium">
-                    ...{data?.video_title.substring(0, 30)}
+                  {data?.video_title.substring(0, 25)}  ...
                   </p>
                 </Link>
                 <Link href="/profile/samansayyar">
