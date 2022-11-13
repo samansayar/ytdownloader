@@ -1,10 +1,10 @@
 import Sidebar from '@/components/layouts/Sidebar';
 import NavBar from '@/components/NavBar';
 
-export default function Main({ children, hiddenSidebar = false, withoutPadding = false }) {
+export default function Main({ children, hiddenSidebar = false, withoutPadding = false,dir="rtl" }) {
   if (withoutPadding) {
     return (
-      <div>
+      <div dir={dir}>
         <NavBar />
         <div className='flex w-full'>
           <Sidebar hidden={hiddenSidebar} />
@@ -16,7 +16,7 @@ export default function Main({ children, hiddenSidebar = false, withoutPadding =
     )
   } else {
     return (
-      <div>
+      <div dir={dir}>
         <NavBar />
         <div className='flex w-full'>
           <Sidebar hidden={hiddenSidebar} />

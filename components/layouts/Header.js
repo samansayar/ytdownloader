@@ -38,12 +38,12 @@ export default function Header({ AllVideo, AllCategory, AllChannel }) {
         </Swiper>
       </section>
       <div className="lg:pr-10">
-        <section dir="ltr" className="mt-10 w-full relative grid gap-[7px] place-content-start items-center lg:grid-cols-6 grid-cols-3">
+        <section className="mt-10 w-full relative grid gap-[7px] place-content-start items-center lg:grid-cols-6 grid-cols-3" style={{ direction: 'ltr' }}>
           {AllCategory.map((res, index) => <CardExplore data={res} key={index} />)}
         </section>
 
         <section className="mt-10 w-full relative">
-          <div dir="ltr" className="grid place-content-center place-items-center grid-cols-12 gap-y-4 w-full mt-6">
+          <div className="grid place-content-center place-items-center grid-cols-12 gap-y-4 w-full mt-6">
             {AllVideo.map((data, index) => <CardVideo data={data} key={index} />)}
           </div>
         </section>

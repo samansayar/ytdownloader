@@ -10,11 +10,11 @@ const NavBar = () => {
   const { theme, setTheme } = useTheme()
   const [toggle, setToggle] = useState(false)
   return (
-    <div className="w-full py-2 shadow  h-[65px] flex justify-between items-center px-5">
+    <div style={{ direction:'rtl' }} className="w-full py-2 shadow  h-[65px] flex justify-between items-center px-5">
       {/* Button Add video */}
-      <div className="flex items-center space-x-8">
+      <div className="flex flex-row-reverse items-center space-x-8">
         <div></div>
-        <Link href="/user/login">
+        <Link  href="https://rasmlink.com/studio" target={'_blank'}>
           <a className="capitalize rounded-md bg-red-600 flex justify-around items-center text-white lg:text-sm text-xs lg:px-6 px-4 py-2">
             <span>add video</span>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
@@ -33,11 +33,11 @@ const NavBar = () => {
         <Search />
       </div>
       {/* Icon BarMenu - logo  */}
-      <div className="flex items-center justify-center">
+      <div className="flex items-center flex-row-reverse justify-center">
         <div className="lg:block hidden">
           <Link href="/">
-            <div className="mx-8 flex h-full items-center">
-              <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Youtube</p>
+            <div className="mx-4 flex h-full items-center cursor-pointer">
+              <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Rasmlink</p>
               <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full" />
             </div>
           </Link>
@@ -54,8 +54,8 @@ const NavBar = () => {
               <svg className="w-7 h-7 text-gray-800 dark:text-slate-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 6h16M4 12h16M4 18h16" /></svg>
               </button>
               <Link href="/">
-                <div className="mx-8 flex h-full items-center">
-                <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Youtube</p>
+                <div className="mx-8 flex h-full items-center cursor-pointer">
+                <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Rasmlink</p>
                   <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full" />
                 </div>
               </Link>

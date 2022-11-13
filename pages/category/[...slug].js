@@ -1,10 +1,9 @@
 import Main from '@/components/layouts/Main';
 import Head from 'next/head';
 import { useRouter } from 'next/router'
-import Banner from '@/public/images/Sprinkle.svg';
-import Avatar from '@/public/images/Sprinkle.svg';
 import Image from 'next/image';
 import CardVideo from '@/components/cards/CardVideo';
+import Banner from '@/components/Banner';
 
 export default function Slug({ AllProfile }) {
     const route = useRouter();
@@ -15,13 +14,12 @@ export default function Slug({ AllProfile }) {
         <div>
             <Head><title>دسته بندی های {slug[1]} - Yoututbe</title></Head>
             <Main withoutPadding={true}>
-                <div className='w-ful relative'>
-                    <Image alt="image placeholder" src={Banner} height={'230'} className='object-cover w-full h-full' />
-                </div>
-                <div dir='ltr' className='bg-white/80 lg:h-44 dark:bg-slate-900 flex flex-col lg:pr-10  pt-4 pb-0'>
+                <Banner />
+                <div dir='ltr' className='bg-white/80 lg:h-44 dark:bg-slate-900 flex flex-col lg:px-10  pt-4 pb-0'>
                     <div className='flex items-center h-full w-full'>
-                        <div className='relative'><Image alt="image placeholder" height={'74'} width={'74'} src={Avatar}
-                            className={'w-full h-full rounded-full object-cover'} /></div>
+                        <div className='relative rounded-full bg-red-100 p-1 flex justify-center h-20 w-20 items-center'>
+                            <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'50px'} height={'50px'} className="w-full" />
+                        </div>
 
                         <div className='flex justify-center flex-col mx-5'>
                             <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>{slug[1]}</p>
@@ -30,8 +28,8 @@ export default function Slug({ AllProfile }) {
                     </div>
                     {/* Tab */}
                     <div className='mx-2 h-full flex items-end space-x-8'>
-                        <p className='uppercase text-gray-600 pb-3 text-sm border-b-[2px] w-20 flex justify-center items-center border-gray-600 dark:text-slate-400'>خانه</p>
-                        <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'>کانال </p>
+                        <p className='uppercase text-gray-600 pb-3 text-sm border-b-[2px] w-20 flex justify-center items-center border-gray-600 dark:text-slate-400'>Home</p>
+                        {/* <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'> </p> */}
                     </div>
                 </div>
                 <div dir='ltr' className='mt-6 pl-20 pr-10 w-full pb-10 dark:text-slate-300 text-gray-600'>
@@ -62,7 +60,7 @@ export async function getServerSideProps({ params }) {
 
     const { slug } = params;
     // Get All Profile Data
-    const resProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=${slug[0]}&is_special=true`, {
+    const resProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=${slug[0]}&is_special=false&count=30`, {
         headers: {
             "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }
