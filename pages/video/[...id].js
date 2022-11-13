@@ -3,19 +3,32 @@ import CardListVideo from '@/components/cards/CardListVideo';
 import Head from 'next/head';
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
-import plyr from 'plyr'
-import YouTube from "react-youtube";
-import 'plyr/dist/plyr.css'
 import Image from 'next/image';
-import { data } from 'autoprefixer';
 import Link from 'next/link';
-
+import "plyr-react/plyr.css";
+import Hls from "hls.js";
+import Plyr from "plyr-react";
 export default function SingleVideo({ video, getPlaylist }) {
   const router = useRouter();
   const { id } = router.query;
-  console.log(id)
   // console.log("video.video_url::", video.video_id)
   const player = useRef();
+  useEffect(() => {
+    console.log(video.hls_url)
+    const loadVideo = async () => {
+      if (video.hls_url !== "") {
+        const video0 = document.getElementById("plyr");
+        var hls = new Hls();
+        hls.loadSource(video.hls_url);
+        hls.attachMedia(video0);
+        player.current.plyr.media = video0;
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          player.current.plyr.play();
+        });
+      }
+    };
+    loadVideo();
+  });
   // useEffect(() => {
   //   const options = {};
   //   player.current = plyr.setup('#plyr-player', options);
@@ -39,48 +52,20 @@ export default function SingleVideo({ video, getPlaylist }) {
       <Main hiddenSidebar={true}>
 
         <div className='flex w-full lg:flex-row flex-col-reverse items-cenetr relative'>
-          {/* List Video */}
-          <div className='w-full lg:w-3/12 h-full relative lg:p-2'>
-            <div className='w-full text-xs border border-gray-300 dark:border-slate-600'>
-              <div className='w-full border-b border-gray-300 dark:border-slate-600 p-4'>
-                <div className='flex items-center text-gray-600 dark:text-slate-100'>
-                  <div className='lg:block hidden'>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>
-                  </div>
-                  <p className='font-medium text-sm mx-4'>{getPlaylist[0].playlist_metadata.snippet.channelTitle}</p>
-                </div>
-                <div className='mt-2 w-full flex justify-end items-center text-gray-600'>
-                  {/* <p className='text-gray-700 text-xs mx-4 dark:text-slate-100'>samansayyar 1/8</p> */}
-                </div>
-                <div className='mt-4 w-full hidden justify-between items-center text-gray-600 dark:text-slate-100'>
-                  <div>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" /></svg>
-                  </div>
-                  <div className='flex items-center space-x-2'>
-                    {/* <div> */}
-                    <svg className="w-5 h-5 mx-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                    {/* </div> */}
-                    {/* <div> */}
-                    <svg className="w-5 h-5 mx-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-                    {/* </div> */}
-                  </div>
-                </div>
-              </div>
-              <div className='h-96 space-y-1 scrollbar-hide pb-4 pt-2 overflow-y-auto w-full flex flex-col'>
-                <div className='rtl:block ltr:hidden'></div>
-                {getPlaylist.map((res, index) => (
-                  <CardListVideo data={res} key={index} />
-                ))}
-              </div>
-            </div>
-          </div>
-
           {/* Watch Video selected */}
-          <div className='w-full lg:w-9/12 lg:p-2 h-full relative'>
+          <div className='w-full lg:w-[75%] lg:p-2 h-full relative'>
             <div className="relative w-full ">
               <div className="w-full relative h-full">
-                {/* <YouTube videoId={video?.video_id} opts={videoOptions} /> */}
-                <iframe className='w-full' height="500" src={video.video_url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                {video?.hls_url !== "" ? (
+                  <Plyr
+                    id="plyr"
+                    options={{ volume: 1, autoplay: true }}
+                    source={{}}
+                    ref={player}
+                  />
+                ) : (
+                  <iframe className='w-full' height="500" src={video.video_url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                )}
               </div>
 
             </div>
@@ -168,6 +153,40 @@ export default function SingleVideo({ video, getPlaylist }) {
               </div>
             </div>
           </div>
+          {/* List Video */}
+          <div className='w-full lg:w-[25%] h-full relative lg:p-2'>
+            <div className='w-full text-xs bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600'>
+              <div className='w-full border-b border-gray-300 dark:border-slate-600 p-4'>
+                <div className='flex items-center text-gray-600 dark:text-slate-100'>
+                  <p className='font-medium text-sm mx-2'>{getPlaylist[0].playlist_metadata.snippet.channelTitle}</p>
+                </div>
+                <div className='mt-2 w-full flex justify-end items-center text-gray-600'>
+                  {/* <p className='text-gray-700 text-xs mx-4 dark:text-slate-100'>samansayyar 1/8</p> */}
+                </div>
+                <div className='mt-4 w-full hidden justify-between items-center text-gray-600 dark:text-slate-100'>
+                  <div>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" /></svg>
+                  </div>
+                  <div className='flex items-center space-x-2'>
+                    {/* <div> */}
+                    <svg className="w-5 h-5 mx-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                    {/* </div> */}
+                    {/* <div> */}
+                    <svg className="w-5 h-5 mx-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                    {/* </div> */}
+                  </div>
+                </div>
+              </div>
+              <div className='h-96 space-y-1 scrollbar-hide pb-4 pt-2 overflow-y-auto w-full flex flex-col'>
+                <div className='rtl:block ltr:hidden'></div>
+                {getPlaylist.map((res, index) => (
+                  <CardListVideo data={res} key={index} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </Main>
     </div>

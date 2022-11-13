@@ -4,18 +4,31 @@ import { useRouter } from 'next/router'
 import Image from 'next/image';
 import CardVideo from '@/components/cards/CardVideo';
 import Banner from '@/components/Banner';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-export default function Slug({ AllProfile }) {
+export default function Slug({ AllProfile, subcat }) {
     const route = useRouter();
     const { slug } = route.query;
-    console.log(AllProfile)
+    // console.log('subcat',subcat);
+    // useEffect(() => {
+    //     const getSubCat = async () => {
+
+    //         setSubcat(dataSubCat);
+    //     }
+    //     getSubCat();
+    //     console.log(subcat);
+    // }, [])
+
     // const { slug } = route.query;
+
     return (
         <div>
             <Head><title>دسته بندی های {slug[1]} - Yoututbe</title></Head>
             <Main withoutPadding={true}>
+
                 <Banner />
-                <div dir='ltr' className='bg-white/80 lg:h-44 dark:bg-slate-900 flex flex-col lg:px-10  pt-4 pb-0'>
+                <div dir='ltr' className={`bg-white/80 ${subcat[0]?.main_category_info ? 'lg:h-40' : 'lg:h-28'} dark:bg-slate-900 flex flex-col lg:px-10  pt-4 pb-0`}>
                     <div className='flex items-center h-full w-full'>
                         <div className='relative rounded-full bg-red-100 p-1 flex justify-center h-20 w-20 items-center'>
                             <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'50px'} height={'50px'} className="w-full" />
@@ -27,19 +40,16 @@ export default function Slug({ AllProfile }) {
                         </div>
                     </div>
                     {/* Tab */}
-                    <div className='mx-2 h-full flex items-end space-x-8'>
-                        <p className='uppercase text-gray-600 pb-3 text-sm border-b-[2px] w-20 flex justify-center items-center border-gray-600 dark:text-slate-400'>Home</p>
-                        {/* <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'> </p> */}
-                    </div>
+                    {subcat && (
+                        <div className='mx-1 h-full flex items-end space-x-8'>
+                            {subcat?.map(res => (
+                                    <p key={res?.id} className='uppercase text-gray-600 pb-3 text-sm border-b-[2px] w-20 flex justify-center items-center border-gray-600 dark:text-slate-400'>{res?.main_category_info?.category_title}</p>
+                            ))}
+                            {/* <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'> </p> */}
+                        </div>
+                    )}
                 </div>
                 <div dir='ltr' className='mt-6 pl-20 pr-10 w-full pb-10 dark:text-slate-300 text-gray-600'>
-
-                    <h2 className='capitalize flex font-medium items-cenetr'>
-                        <span>Top Stories</span>
-                        <span className='ml-4'>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </span>
-                    </h2>
                     {/* Videos */}
                     <div className='grid grid-cols-12 gap-2 gap-y-4 w-full mt-6'>
                         {AllProfile.length > 0 ? (
@@ -60,18 +70,25 @@ export async function getServerSideProps({ params }) {
 
     const { slug } = params;
     // Get All Profile Data
-    const resProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=${slug[0]}&is_special=false&count=30`, {
+    const resProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=${slug[0]}&is_special=false`, {
         headers: {
             "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }
     });
     const AllProfile = await resProfile.json();
 
+    const ressubcat = await fetch(`https://rasmlink.ir/api-v1/video_categories?id=${slug[0]}`, {
+        headers: {
+            "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
+        }
+    });
+    const subcat = await ressubcat.json();
+
     // Get All Profile Data
     // const ResVideoProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_channel_id=${slug[0]}&is_special=true`);
     // const AllVideo = await ResVideoProfile.json();
 
-    if (!AllProfile) {
+    if (!AllProfile && !subcat) {
         return {
             redirect: {
                 destination: '/',
@@ -83,6 +100,7 @@ export async function getServerSideProps({ params }) {
     return {
         props: {
             AllProfile,
+            subcat,
         }
     }
 }

@@ -98,7 +98,7 @@ export async function getServerSideProps({ params }) {
     const AllProfile = await resProfile.json();
 
     // Get All Profile Data
-    const ResVideoProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_channel_id=${username[0]}&is_special=false`, {
+    const ResVideoProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_channel_id=${username[0]}&is_special=true`, {
         headers: {
             "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }

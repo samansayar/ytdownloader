@@ -37,8 +37,8 @@ const NavBar = () => {
         <div className="lg:block hidden">
           <Link href="/">
             <div className="mx-4 flex h-full items-center cursor-pointer">
-              <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Rasmlink</p>
               <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full" />
+              <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Rasmlink</p>
             </div>
           </Link>
         </div>
@@ -55,8 +55,8 @@ const NavBar = () => {
               </button>
               <Link href="/">
                 <div className="mx-8 flex h-full items-center cursor-pointer">
-                <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Rasmlink</p>
                   <Image alt="image placeholder" src={'/youtube-svgrepo-com.svg'} width={'35'} height={'60px'} className="w-full" />
+                <p className="mx-1 font-bold dark:text-slate-100 text-gray-600">Rasmlink</p>
                 </div>
               </Link>
             </div>

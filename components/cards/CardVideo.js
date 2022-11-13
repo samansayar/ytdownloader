@@ -24,14 +24,14 @@ export default function CardVideo({ data, key }) {
 
   return (
     <Link href={'/video/' + data?.video_id} key={key}>
-      <div className="col-span-12 cursor-pointer sm:col-span-6 rounded-lg transition duration-200 pb-2 md:col-span-3 dark:border-b dark:border-l border-slate-700 px-2">
+      <div className="col-span-12 cursor-pointer sm:col-span-6 rounded-lg transition duration-200 pb-2 md:col-span-3  px-2">
         <div className="w-full flex flex-col">
           <div className="relative">
             {/* <!-- Image Video --> */}
             <Link href={'/video/' + data?.video_id}>
               <div className='rounded-lg'>
                 {/* this[0].video_metadata.items[0].snippet.thumbnails.maxres.url */}
-                <Image src={data?.video_metadata.items[0].snippet.thumbnails.high.url} className="w-96 rounded-lg object-cover h-48" alt="image profile" width="370px" height={'220px'} />
+                <Image src={data?.video_metadata.items[0].snippet.thumbnails.high.url} className="w-96 rounded-lg dark:rounded-xl object-cover h-48" alt="image profile" width="370px" height={'220px'} />
               </div>
             </Link>
 
@@ -58,8 +58,8 @@ export default function CardVideo({ data, key }) {
                   {data?.video_metadata.items[0].snippet.channelTitle} </a>
               </Link>
               <div className='flex items-center'>
-                <div className="text-gray-500 dark:text-slate-400 text-xs mt-1"> {data?.video_metadata.items[0].snippet.publishedAt}</div>
-                <span className='px-1 font-light text-gray-500'>~</span>
+                {/* <div className="text-gray-500 dark:text-slate-400 text-xs mt-1"> {data?.video_metadata.items[0].snippet.publishedAt}</div>
+                <span className='px-1 font-light text-gray-500'>~</span> */}
                 {/* <p className="text-gray-500 dark:text-slate-400 text-xs mt-1">views {data?.view_count}</p> */}
               </div>
             </div>
