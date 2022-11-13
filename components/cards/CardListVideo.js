@@ -5,7 +5,7 @@ import React from 'react'
 export default function CardListVideo({ data, key }) {
   // console.log(data)
   return (
-    <Link href={'video/' + data.channel_id}>
+    <Link href={'/video/' + data.channel_id}>
 
       <div key={key} className="flex transition duration-150 cursor-pointer hover:bg-white dark:hover:bg-slate-900 py-1 justify-start items-center space-y-2">
         <div className='w-[10%] h-full flex justify-center items-center px-1.5'>

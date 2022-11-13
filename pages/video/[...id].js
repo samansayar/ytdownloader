@@ -12,18 +12,18 @@ export default function SingleVideo({ video, getPlaylist }) {
   const router = useRouter();
   const { id } = router.query
   const player = useRef();
-  useEffect(() => {
-    const options = {};
-    player.current = plyr.setup('#plyr-player', options);
-    // player.current.on('timeupdate', () => timeUpdated()) // this throws an error
-  });
+  // useEffect(() => {
+  //   const options = {};
+  //   player.current = plyr.setup('#plyr-player', options);
+  //   // player.current.on('timeupdate', () => timeUpdated()) // this throws an error
+  // });
 
-  const pause = () => {
-    // this doesn't work either
-    console.log(player.current) // there is something in here
-    player.current.pause() // but this throws an error
-  }
-
+  // const pause = () => {
+  //   // this doesn't work either
+  //   console.log(player.current) // there is something in here
+  //   player.current.pause() // but this throws an error
+  // }
+  console.log('getPlaylist', getPlaylist);
   return (
     <div className='relative'>
       <Head>
@@ -170,21 +170,27 @@ export async function getServerSideProps({ params }) {
   const { id } = params;
   const result = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_id=${id[0]}`, {
     headers: {
-      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+      "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }
   });
   const video = await result.json();
+
   const resultgetPlaylist = await fetch(`https://rasmlink.ir/api-v1/youtube_playlists?playlist_id=${video[0].video_playlist_id}`, {
     headers: {
-      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+      "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }
   });
   const getPlaylist = await resultgetPlaylist.json();
-  if (!video) {
+
+  if (!video && !getPlaylist) {
     return {
-      notFound: true,
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
     }
   }
+
   return {
     props: {
       video: video[0],

@@ -90,7 +90,7 @@ export async function getServerSideProps({ params }) {
     // Get All Profile Data
     const resProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_channels?channel_id=${username[0]}`,{
         headers : {
-          "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+          "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }
       });
     const AllProfile = await resProfile.json();
@@ -98,7 +98,7 @@ export async function getServerSideProps({ params }) {
     // Get All Profile Data
     const ResVideoProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_channel_id=${username[0]}&is_special=true`,{
         headers : {
-          "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+          "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }
       });
     const AllVideo = await ResVideoProfile.json();

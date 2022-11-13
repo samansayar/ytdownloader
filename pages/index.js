@@ -3,9 +3,10 @@ import Head from 'next/head'
 import Main from '@/components/layouts/Main'
 import Header from '../components/layouts/Header'
 import { useEffect } from 'react'
+import { env } from 'process'
 
 export default function Home({ AllVideo, AllCategory, AllChannel }) {
-  // console.log(AllVideo, AllCategory, AllChannel)
+  console.log(AllVideo, AllCategory, AllChannel)
   return (
     <div className='relative'>
       <Head>
@@ -22,9 +23,10 @@ export default function Home({ AllVideo, AllCategory, AllChannel }) {
 
 export async function getServerSideProps() {
   // Get All Video
+  process.env
   const resvideo = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?is_special=true`, {
     headers: {
-      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+      "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }
   });
   const AllVideo = await resvideo.json();
@@ -32,7 +34,7 @@ export async function getServerSideProps() {
   // Get All Category
   const resCategory = await fetch(`https://rasmlink.ir/api-v1/video_categories`, {
     headers: {
-      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+      "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }
   });
   const AllCategory = await resCategory.json();
@@ -40,7 +42,7 @@ export async function getServerSideProps() {
   // Get All Channel
   const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels`, {
     headers: {
-      "Authorization": "a6b72288-f0e8-4837-8e55-828d7eaa7784"
+      "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }
   });
   const AllChannel = await resChannel.json();
