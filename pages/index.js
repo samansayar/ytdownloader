@@ -41,6 +41,7 @@ export async function getServerSideProps() {
   const AllCategory = spereadChannel.filter(res => {
     return res.main_category_info == null;
 });
+console.log(AllCategory)
   // Get All Channel
   const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels`, {
     headers: {
