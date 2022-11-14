@@ -28,7 +28,11 @@ const NavBar = () => {
         }
       });
       const AllChannel = await resChannel.json();
-      setcategory(allcagegory);
+      const spereadChannel = allcagegory.filter(res => {
+        return res.main_category_info == null;
+      });
+
+      setcategory(spereadChannel);
       setchannel(AllChannel);
     }
     getCategory();
