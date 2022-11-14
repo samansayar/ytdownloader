@@ -8,7 +8,8 @@ import Link from 'next/link';
 import "plyr-react/plyr.css";
 import Hls from "hls.js";
 import Plyr from "plyr-react";
-export default function SingleVideo({ video, getPlaylist }) {
+import CardListRelativeVideo from '@/components/cards/CardListRelativeVideo';
+export default function SingleVideo({ video, getPlaylist, getRelated }) {
   const router = useRouter();
   const { id } = router.query;
   // console.log("video.video_url::", video.video_id)
@@ -29,18 +30,6 @@ export default function SingleVideo({ video, getPlaylist }) {
     };
     loadVideo();
   });
-  // useEffect(() => {
-  //   const options = {};
-  //   player.current = plyr.setup('#plyr-player', options);
-  //   // player.current.on('timeupdate', () => timeUpdated()) // this throws an error
-  // });
-
-  // const pause = () => {
-  //   // this doesn't work either
-  //   console.log(player.current) // there is something in here
-  //   player.current.pause() // but this throws an error
-  // }
-  // console.log('getPlaylist', getPlaylist);
   return (
     <div className='relative'>
       <Head>
@@ -79,47 +68,7 @@ export default function SingleVideo({ video, getPlaylist }) {
                     </h3>
                   </div>
                 </div>
-
-                {/* <div className="flex flex-row space-x-2 items-center">
-
-
-                  <div className="flex flex-row space-x-5 justify-center items-center pb-4 capitalize mr-5">
-                    <div></div>
-                    <button type="button" className="flex items-center text-sm text-gray-700 dark:text-slate-400 focus:outline-none">
-                      <span className="mx-1">23k</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="fill-current md:w-6 md:h-6 w-5 h-5"
-                        viewBox="0 0 24 24">
-                        <path
-                          d="M20,8h-5.612l1.123-3.367c0.202-0.608,0.1-1.282-0.275-1.802S14.253,2,13.612,2H12c-0.297,0-0.578,0.132-0.769,0.36 L6.531,8H4c-1.103,0-2,0.897-2,2v9c0,1.103,0.897,2,2,2h3h10.307c0.829,0,1.581-0.521,1.873-1.298l2.757-7.351 C21.979,12.239,22,12.12,22,12v-2C22,8.897,21.103,8,20,8z M4,10h2v9H4V10z M20,11.819L17.307,19H8V9.362L12.468,4l1.146,0 l-1.562,4.683c-0.103,0.305-0.051,0.64,0.137,0.901C12.377,9.846,12.679,10,13,10h7V11.819z">
-                        </path>
-                      </svg>
-                    </button>
-
-                    <button type="button" className="flex items-center text-sm text-gray-700 dark:text-slate-400 focus:outline-none">
-                      <span className="mx-1">دیس لایک</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="fill-current md:w-6 md:h-6 w-5 h-5"
-                        viewBox="0 0 24 24">
-                        <path
-                          d="M20,3h-3H6.693C5.864,3,5.112,3.521,4.82,4.298l-2.757,7.351C2.021,11.761,2,11.88,2,12v2c0,1.103,0.897,2,2,2h5.612 L8.49,19.367c-0.203,0.608-0.101,1.282,0.274,1.802C9.14,21.689,9.746,22,10.388,22H12c0.297,0,0.578-0.132,0.769-0.36l4.7-5.64 H20c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z M11.531,20h-1.145l1.562-4.684c0.103-0.305,0.051-0.64-0.137-0.901 C11.623,14.154,11.321,14,11,14H4v-1.819L6.693,5H16v9.638L11.531,20z M18,14V5h2l0.001,9H18z">
-                        </path>
-                      </svg>
-                    </button>
-                  </div>
-
-                  <div className="flex flex-row space-x-2 justify-center items-center pb-4 capitalize">
-                    <button type="button" className="flex items-center text-sm text-gray-700 dark:text-slate-400 focus:outline-none">
-                      <span className="mx-1 capitalize">اشتراک گذاری</span>
-                      <svg className="md:w-6 md:h-6 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
-                        </path>
-                      </svg>
-                    </button>
-                  </div>
-                </div> */}
               </div>
-
 
               <div className="mt-4">
                 <div className="flex flex-row justify-between items-center">
@@ -154,7 +103,7 @@ export default function SingleVideo({ video, getPlaylist }) {
             </div>
           </div>
           {/* List Video */}
-          <div className='w-full lg:w-[25%] h-full relative lg:p-2'>
+          <div className='w-full lg:w-[30%] h-full relative lg:p-2'>
             <div className='w-full text-xs bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600'>
               <div className='w-full border-b border-gray-300 dark:border-slate-600 p-4'>
                 <div className='flex items-center text-gray-600 dark:text-slate-100'>
@@ -177,12 +126,17 @@ export default function SingleVideo({ video, getPlaylist }) {
                   </div>
                 </div>
               </div>
-              <div className='h-96 space-y-1 scrollbar-hide pb-4 pt-2 overflow-y-auto w-full flex flex-col'>
+              <div className='max-h-96 space-y-1 scrollbar-hide pb-4 px-1 pt-2 overflow-y-auto w-full flex flex-col'>
                 <div className='rtl:block ltr:hidden'></div>
                 {getPlaylist.map((res, index) => (
                   <CardListVideo data={res} key={index} />
                 ))}
               </div>
+            </div>
+            <div className='mt-2'>
+              {getRelated.map((res, index) => (
+                <CardListRelativeVideo data={res} key={index} />
+              ))}
             </div>
           </div>
 
@@ -193,6 +147,23 @@ export default function SingleVideo({ video, getPlaylist }) {
   )
 }
 export async function getServerSideProps({ params }) {
+  function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  }
   const { id } = params;
   const result = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_id=${id[0]}`, {
     headers: {
@@ -207,6 +178,14 @@ export async function getServerSideProps({ params }) {
   });
   const getPlaylist = await resultgetPlaylist.json();
 
+  const resultgetRelated = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=${video[0]?.video_categories_ids}&is_active=true&is_verfied=true&offset=1&limit=15`, {
+    headers: {
+      "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
+    }
+  });
+  const getRelated = await resultgetRelated.json();
+  shuffle(getRelated);
+
   if (!video && !getPlaylist) {
     return {
       redirect: {
@@ -220,6 +199,7 @@ export async function getServerSideProps({ params }) {
     props: {
       video: video[0],
       getPlaylist,
+      getRelated,
     },
   }
 }

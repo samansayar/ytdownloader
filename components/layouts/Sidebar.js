@@ -45,7 +45,7 @@ export default function Sidebar({ hidden = false }) {
                 </div>
                 <div className='mt-2 px-2'>
                     {category?.map((res, index) => (
-                        <Link key={index} href={`/category/${res?.id}/${res?.id}/${res?.category_title.toLowerCase()}`}>
+                        <Link key={index} href={`/category/${res?.id}/${res?.category_title.toLowerCase()}`}>
                             <div key={index} className='flex transition duration-100 dark:hover:bg-slate-600 bg-transparent hover:bg-slate-100 py-0.5 cursor-pointer rounded-lg items-center space-x-4'>
                                 <div className='relative rounded-full flex justify-center h-9 w-9 items-center'>
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>

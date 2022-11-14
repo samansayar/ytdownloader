@@ -6,22 +6,20 @@ export default function CardListVideo({ data, key }) {
   console.log('data',data)
   return (
     <Link href="#" key={key}>
-      <div className="flex transition duration-150 cursor-pointer hover:bg-white dark:hover:bg-slate-900 py-1 justify-start items-center space-y-2">
-        <div className='w-[90%] h-full flex justify-start'>
+      <div className="flex transition duration-150 cursor-pointer  hover:bg-white dark:hover:bg-slate-900 py-1 justify-start items-start space-y-2">
+        <div className='w-full h-full flex'>
 
-          <div className="relative">
+          <div className="relative w-[120px]  bg-slate-200 rounded-lg dark:bg-slate-700">
             {/* <!-- Image Video --> */}
             <a href="#">
-              <Image src={data?.playlist_metadata.snippet.thumbnails.medium.url} width={data?.playlist_metadata.snippet.thumbnails.default.width} height={'70px'}
-                className="w-24 object-cover h-24" alt="image profile" />
+              <Image src={data?.playlist_metadata.snippet.thumbnails.medium.url} width={data?.playlist_metadata.snippet.thumbnails.default.width} height={'80px'}
+                className="object-cover w-[120px] rounded-lg" alt="image profile" />
             </a>
-
-            <p className="absolute right-1 bottom-4 dark:text-slate-300 bg-gray-900 text-gray-100 text-[11px] px-2 rounded-sm py-0.5">1:15</p>
           </div>
 
-          <div className='flex text-xs mt-2 mx-3 dark:text-slate-100 text-gray-900 flex-col justify-start'>
-            <p>{data?.playlist_title}</p>
-            <p className='capitalize mt-1 text-[10px] text-gray-600 dark:text-slate-300'>{data?.playlist_metadata.snippet.channelTitle}</p>
+          <div className='flex text-xs mx-2 dark:text-slate-100 text-gray-900 flex-col justify-around'>
+            <p className='-mt-2'>{data?.playlist_title.substring(0,30)}...</p>
+            <p className='capitalize text-[10px] text-gray-600 dark:text-slate-300'>{data?.playlist_metadata.snippet.channelTitle}</p>
           </div>
         </div>
       </div>

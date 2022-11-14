@@ -1,13 +1,13 @@
+import { useEffect, useState } from 'react';
 import Main from '@/components/layouts/Main';
 import Head from 'next/head';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 import CardVideo from '@/components/cards/CardVideo';
 import Banner from '@/components/Banner';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
-export default function Slug({ AllProfile, subcat }) {
+export default function Slug({ AllProfile, subcat, GetAllRecommended }) {
+    const [tab, setTab] = useState(0)
     const route = useRouter();
     const { slug } = route.query;
     // console.log(AllProfiles)
@@ -25,7 +25,7 @@ export default function Slug({ AllProfile, subcat }) {
 
     return (
         <div>
-            <Head><title>دسته بندی های {slug[2]} - Yoututbe</title></Head>
+            <Head><title>دسته بندی های {slug[1]} - Rasmlink</title></Head>
             <Main withoutPadding={true}>
 
                 <Banner />
@@ -36,31 +36,34 @@ export default function Slug({ AllProfile, subcat }) {
                         </div>
 
                         <div className='flex justify-center flex-col mx-5'>
-                            <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>{slug[2]}</p>
+                            <p className='text-xl text-gray-800 font-medium dark:text-gray-100 capitalize'>{slug[1]}</p>
                             {/* <p className='text-gray-500 dark:text-slate-300 text-[12px] mt-0.5'>36.2M subscribers</p> */}
                         </div>
                     </div>
                     {/* Tab */}
                     {/* {subcat && ( */}
-                        <div className='mx-1 h-full flex items-end space-x-8'>
-                            {subcat?.map(res => (
-                                    <p key={res?.id} className='uppercase text-gray-600 pb-2 text-sm border-b-[2px] flex justify-center items-center border-gray-600 dark:text-slate-400'>{res?.category_title}</p>
-                            ))}
-                            {/* <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'> </p> */}
-                        </div>
+                    <div className='mx-1 h-full flex items-end space-x-8'>
+                        <p className={`uppercase text-gray-600 pb-2 text-sm  flex justify-center items-center border-gray-600 dark:text-slate-400`}>Recommended</p>
+                        {subcat?.map(res => (
+                            <p key={res?.id} className={`uppercase text-gray-600 pb-2 text-sm border-b-[2px] flex justify-center items-center border-gray-600 dark:text-slate-400`}>{res?.category_title}</p>
+                        ))}
+                        {/* <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'> </p> */}
+                    </div>
                     {/* )} */}
                 </div>
                 <div dir='ltr' className='mt-6 lg:pl-20 px-10 lg:pr-10 w-full pb-10 dark:text-slate-300 text-gray-600'>
                     {/* Videos */}
-                    <div className='grid grid-cols-12 gap-2 gap-y-4  mt-6'>
-                        {AllProfile.length > 0 ? (
-                            AllProfile.map((res, index) => (
-                                <CardVideo data={res} key={index} />
-                            ))
-                        ) : (
-                            <div></div>
-                        )}
-                    </div>
+                    {tab === 0 && (
+                        <div className='grid grid-cols-12 gap-2 gap-y-4  mt-6'>
+                            {GetAllRecommended.length > 0 ? (
+                                GetAllRecommended?.map((res, index) => (
+                                    <CardVideo data={res} key={index} />
+                                ))
+                            ) : (
+                                <div></div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </Main>
         </div>
@@ -76,21 +79,30 @@ export async function getServerSideProps({ params }) {
             "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }
     });
-    // https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=9&is_verfied=true&count=1
     const AllProfile = await resProfile.json();
 
-    const ressubcat = await fetch(`https://rasmlink.ir/api-v1/video_categories?id=${slug[1]}`, {
+
+    const ressubcat = await fetch(`https://rasmlink.ir/api-v1/video_categories`, {
         headers: {
             "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }
     });
-    const subcat = await ressubcat.json();
+    const allcagegory = await ressubcat.json();
+    const subcat = allcagegory.filter(res => {
+        return res.main_category_info != null && res.main_category_info.id == slug[0]
+    });
 
-    // Get All Profile Data
-    // const ResVideoProfile = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_channel_id=${slug[0]}&is_special=true`);
-    // const AllVideo = await ResVideoProfile.json();
 
-    if (!AllProfile && !subcat) {
+    const recommended = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?video_categories_ids=${slug[0]}&is_active=true&is_verfied=true`, {
+        headers: {
+            "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
+        }
+    });
+    const GetAllRecommended = await recommended.json();
+
+    console.log(GetAllRecommended);
+
+    if (!AllProfile && !subcat && !GetAllRecommended) {
         return {
             redirect: {
                 destination: '/',
@@ -103,6 +115,7 @@ export async function getServerSideProps({ params }) {
         props: {
             AllProfile,
             subcat,
+            GetAllRecommended,
         }
     }
 }
