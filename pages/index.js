@@ -37,8 +37,10 @@ export async function getServerSideProps() {
       "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }
   });
-  const AllCategory = await resCategory.json();
-
+  const spereadChannel = await resCategory.json();
+  const AllCategory = spereadChannel.filter(res => {
+    return res.main_category_info == null;
+});
   // Get All Channel
   const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels`, {
     headers: {
