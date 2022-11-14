@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 export default function CardVideo({ data, key }) {
+  // console.log('data::::', data)
   const [channel, setchannel] = useState([]);
   useEffect(() => {
     const getChannel = async () => {
