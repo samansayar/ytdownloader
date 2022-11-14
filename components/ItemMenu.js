@@ -3,9 +3,9 @@ import React from 'react'
 
 const Items = [
     { 'title': 'خانه', 'icon': 'home', 'href': '/' },
-    { 'title': 'اکسپلور', 'icon': 'explore', 'href': '/explore' },
-    { 'title': 'ویدیوهای کوتاه', 'icon': 'shorts', 'href': '/shorts' },
-    { 'title': 'مشترک های شما', 'icon': 'subscripition', 'href': '/subscripition' },
+    // { 'title': 'اکسپلور', 'icon': 'explore', 'href': '/explore' },
+    // { 'title': 'ویدیوهای کوتاه', 'icon': 'shorts', 'href': '/shorts' },
+    // { 'title': 'مشترک های شما', 'icon': 'subscripition', 'href': '/subscripition' },
 ]
 export default function ItemMenu() {
     return (
