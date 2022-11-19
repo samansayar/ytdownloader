@@ -10,18 +10,30 @@ export default function Slug({ AllProfile, subcat, GetAllRecommended }) {
     const [tab, setTab] = useState(0)
     const route = useRouter();
     const { slug } = route.query;
-    // console.log(AllProfiles)
-    // console.log('subcat',subcat);
-    // useEffect(() => {
-    //     const getSubCat = async () => {
+    let arr = [];
+    subcat.map(res => {
+        return arr.push(res.id);
+    });
+    // console.log(arr)
+    const getVideoCats = arr.map((item, index) => {
+            // const data = GetAllRecommended.filter(res => {
+            //     // return res?.video_categories_ids == item.toString();
+            //     console.log('data:::', item.toString(), res?.video_categories_ids)
+            // });
+        return (
+            tab === (index + 1) && (
+                <div key={index} className='grid grid-cols-12 gap-2 gap-y-4  mt-6'>
+                    {data.length > 0 ? (
+                        data?.map((res, index) => (
+                            <CardVideo data={res} key={index} />
+                        ))
+                    ) : (
+                        <div>چیزی یافت نشد</div>
+                    )}
+                </div>
+            ))
+    });
 
-    //         setSubcat(dataSubCat);
-    //     }
-    //     getSubCat();
-    //     console.log(subcat);
-    // }, [])
-
-    // const { slug } = route.query;
 
     return (
         <div>
@@ -43,9 +55,9 @@ export default function Slug({ AllProfile, subcat, GetAllRecommended }) {
                     {/* Tab */}
                     {/* {subcat && ( */}
                     <div className='mx-1 h-full flex items-end space-x-8'>
-                        <p className={`uppercase text-gray-600 pb-2 text-sm  flex justify-center items-center border-gray-600 dark:text-slate-400`}>Recommended</p>
-                        {subcat?.map(res => (
-                            <p key={res?.id} className={`uppercase text-gray-600 pb-2 text-sm border-b-[2px] flex justify-center items-center border-gray-600 dark:text-slate-400`}>{res?.category_title}</p>
+                        <button onClick={() => setTab(0)} className={`uppercase text-gray-600 pb-2 text-xs  flex justify-center items-center ${tab === 0 && 'border-b-[1px]'} border-gray-600 transition duration-300 dark:border-slate-300 cursor-pointer dark:text-slate-300 dark:hover:text-slate-100 text-slate-900`}>Recommended</button>
+                        {subcat?.map((res, index) => (
+                            <button key={res?.id} onClick={() => setTab(index + 1)} className={`uppercase text-gray-600 pb-2 text-xs ${tab === (index + 1) && 'border-b-[1px]'} flex transition-all duration-300 justify-center items-center border-gray-600 dark:border-slate-300 cursor-pointer dark:text-slate-300 dark:hover:text-slate-100 text-slate-900`}>{res?.category_title}{res?.id}</button>
                         ))}
                         {/* <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'> </p> */}
                     </div>
@@ -60,10 +72,11 @@ export default function Slug({ AllProfile, subcat, GetAllRecommended }) {
                                     <CardVideo data={res} key={index} />
                                 ))
                             ) : (
-                                <div></div>
+                                <div>چیزی یافت نشد</div>
                             )}
                         </div>
                     )}
+                    {/* {getVideoCats} */}
                 </div>
             </Main>
         </div>
@@ -100,7 +113,7 @@ export async function getServerSideProps({ params }) {
     });
     const GetAllRecommended = await recommended.json();
 
-    console.log(GetAllRecommended);
+    // console.log(GetAllRecommended);
 
     if (!AllProfile && !subcat && !GetAllRecommended) {
         return {

@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 import Banner from '@/components/Banner';
 import Link from 'next/link';
 const Tabs = [
-    { 'title': 'خانه' },
+    { 'title': 'Recommended' },
+    { 'title': 'Playlist' },
     // { 'title': 'ویدیو ها' },
     // { 'title': 'لیست پخش' },
     // { 'title': 'درباره' }
@@ -60,12 +61,6 @@ export default function Username({ data, AllVideo }) {
                     </div>
                 </div>
                 <div dir='ltr' className='mt-6 pl-20 pr-10 w-full pb-10 text-gray-600 dark:text-slate-300'>
-                    <h2 className='capitalize flex font-medium items-cenetr'>
-                        <span>Top Stories</span>
-                        <span className='ml-4'>
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </span>
-                    </h2>
                     {/* Videos */}
                     {AllVideo.length > 0 ? (
                         <div className='w-full relative'>

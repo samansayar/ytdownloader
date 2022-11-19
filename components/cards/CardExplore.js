@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function CardExplore({ data, key }) {
-    console.log("DATAFIRSR:::", !data, data?.id)
     if (data) {
         return (
             <Link href={`category/${data?.id}/${data?.category_title}`} key={key}>

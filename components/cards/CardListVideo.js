@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 export default function CardListVideo({ data, key }) {
-  console.log('data',data)
+
   return (
     <Link href="#" key={key}>
       <div className="flex transition duration-150 cursor-pointer  hover:bg-white dark:hover:bg-slate-900 py-1 justify-start items-start space-y-2">

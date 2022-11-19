@@ -29,6 +29,7 @@ export default function SingleVideo({ video, getPlaylist, getRelated }) {
       }
     };
     loadVideo();
+    // console.log(getPlaylist)
   });
   return (
     <div className='relative'>

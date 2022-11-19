@@ -22,7 +22,7 @@ const NavBar = () => {
 
 
       // Get All Channel
-      const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels`, {
+      const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels?is_special=true&is_verfied=true`, {
         headers: {
           "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
         }
@@ -36,7 +36,7 @@ const NavBar = () => {
       setchannel(AllChannel);
     }
     getCategory();
-    // console.log(category.category_title)
+
   }, [setcategory, setchannel])
 
   return (
@@ -59,7 +59,7 @@ const NavBar = () => {
         </div>
       </div>
       {/* Search Feild */}
-      <div className="lg:flex hidden">
+      <div className="sm:flex  hidden">
         <Search />
       </div>
       {/* Icon BarMenu - logo  */}

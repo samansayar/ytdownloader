@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { env } from 'process'
 
 export default function Home({ AllVideo, AllCategory, AllChannel }) {
-  // console.log(AllVideo, AllCategory, AllChannel)
+
   return (
     <div className='relative'>
       <Head>
@@ -21,7 +21,7 @@ export default function Home({ AllVideo, AllCategory, AllChannel }) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // Get All Video
   process.env
   const resvideo = await fetch(`https://rasmlink.ir/api-v1/youtube_videos?is_special=true`, {
@@ -30,7 +30,6 @@ export async function getServerSideProps() {
     }
   });
   const AllVideo = await resvideo.json();
-
   // Get All Category
   const resCategory = await fetch(`https://rasmlink.ir/api-v1/video_categories`, {
     headers: {
@@ -40,16 +39,15 @@ export async function getServerSideProps() {
   const spereadChannel = await resCategory.json();
   const AllCategory = spereadChannel.filter(res => {
     return res.main_category_info == null;
-});
-console.log(AllCategory)
+  });
   // Get All Channel
-  const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels`, {
+  const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels?is_special=true&is_verfied=true`, {
     headers: {
       "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }
   });
   const AllChannel = await resChannel.json();
-  // console.log('AllChannel', AllChannel)
+
 
   if (!AllVideo && !AllCategory && !AllChannel) {
     return {
@@ -61,6 +59,7 @@ console.log(AllCategory)
   }
 
   return {
+    revalidate: 60,
     props: {
       AllVideo,
       AllCategory,

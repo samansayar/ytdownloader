@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import ItemMenu from '../ItemMenu'
 
 
@@ -18,7 +19,7 @@ export default function Sidebar({ hidden = false }) {
 
 
             // Get All Channel
-            const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels`, {
+            const resChannel = await fetch(`https://rasmlink.ir/api-v1/youtube_channels?is_special=true&is_verfied=true`, {
                 headers: {
                     "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
                 }
@@ -27,12 +28,10 @@ export default function Sidebar({ hidden = false }) {
             const spereadChannel = allcagegory.filter(res => {
                 return res.main_category_info == null;
             });
-            console.log(spereadChannel)
             setcategory(spereadChannel);
             setchannel(AllChannel);
         }
         getCategory();
-        // console.log(category.category_title)
     }, [setcategory, setchannel])
 
     if (!hidden || channel && category) {
