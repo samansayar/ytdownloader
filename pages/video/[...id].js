@@ -172,7 +172,8 @@ export async function getServerSideProps({ params }) {
     }
   });
   const video = await result.json();
-  const resultgetPlaylist = await fetch(`https://rasmlink.ir/api-v1/youtube_playlists?playlist_id=${video[0].video_playlist_id}`, {
+  console.log('video[0]?.video_playlist_id',video[0]?.video_playlist_id)
+  const resultgetPlaylist = await fetch(`https://rasmlink.ir/api-v1/youtube_playlists?playlist_id=${video[0]?.video_playlist_id}`, {
     headers: {
       "Authorization": "010486ba-0e8a-4382-a47f-d888baac5b5c"
     }

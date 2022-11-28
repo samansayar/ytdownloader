@@ -16,19 +16,22 @@ export default function Slug({ AllProfile, subcat, GetAllRecommended }) {
     });
     // console.log(arr)
     const getVideoCats = arr.map((item, index) => {
-            // const data = GetAllRecommended.filter(res => {
-            //     // return res?.video_categories_ids == item.toString();
-            //     console.log('data:::', item.toString(), res?.video_categories_ids)
-            // });
+        console.log('GetAllRecommended', GetAllRecommended)
+        const data = GetAllRecommended.filter(res => {
+            return res?.video_categories_ids == item.toString();
+        });
+        if (!data) {
+            <div className='text-gray-500 text-xl text-center w-full'>ویدیویی موجود نیست</div>
+        }
         return (
             tab === (index + 1) && (
-                <div key={index} className='grid grid-cols-12 gap-2 gap-y-4  mt-6'>
+                <div key={index} className='grid w-full grid-cols-12 gap-2 gap-y-4  mt-6'>
                     {data.length > 0 ? (
                         data?.map((res, index) => (
                             <CardVideo data={res} key={index} />
                         ))
                     ) : (
-                        <div>چیزی یافت نشد</div>
+                        <p dir='rtl' className='w-96'>چیزی یافت نشد</p>
                     )}
                 </div>
             ))
@@ -57,7 +60,7 @@ export default function Slug({ AllProfile, subcat, GetAllRecommended }) {
                     <div className='mx-1 h-full flex items-end space-x-8'>
                         <button onClick={() => setTab(0)} className={`uppercase text-gray-600 pb-2 text-xs  flex justify-center items-center ${tab === 0 && 'border-b-[1px]'} border-gray-600 transition duration-300 dark:border-slate-300 cursor-pointer dark:text-slate-300 dark:hover:text-slate-100 text-slate-900`}>Recommended</button>
                         {subcat?.map((res, index) => (
-                            <button key={res?.id} onClick={() => setTab(index + 1)} className={`uppercase text-gray-600 pb-2 text-xs ${tab === (index + 1) && 'border-b-[1px]'} flex transition-all duration-300 justify-center items-center border-gray-600 dark:border-slate-300 cursor-pointer dark:text-slate-300 dark:hover:text-slate-100 text-slate-900`}>{res?.category_title}{res?.id}</button>
+                            <button key={res?.id} onClick={() => setTab(index + 1)} className={`uppercase text-gray-600 pb-2 text-xs ${tab === (index + 1) && 'border-b-[1px]'} flex transition-all duration-150 justify-center items-center border-gray-600 dark:border-slate-300 cursor-pointer dark:text-slate-300 dark:hover:text-slate-100 text-slate-900`}>{res?.category_title}</button>
                         ))}
                         {/* <p className='uppercase text-gray-600 pb-3 text-sm w-20 flex justify-center items-center border-gray-600 dark:border-gray-300'> </p> */}
                     </div>
@@ -66,17 +69,19 @@ export default function Slug({ AllProfile, subcat, GetAllRecommended }) {
                 <div dir='ltr' className='mt-6 lg:pl-20 px-10 lg:pr-10 w-full pb-10 dark:text-slate-300 text-gray-600'>
                     {/* Videos */}
                     {tab === 0 && (
-                        <div className='grid grid-cols-12 gap-2 gap-y-4  mt-6'>
+                        <div className='grid w-full grid-cols-12 gap-2 gap-y-4  mt-6'>
                             {GetAllRecommended.length > 0 ? (
                                 GetAllRecommended?.map((res, index) => (
                                     <CardVideo data={res} key={index} />
                                 ))
                             ) : (
-                                <div>چیزی یافت نشد</div>
+                                <div className='w-full'>چیزی یافت نشد</div>
                             )}
                         </div>
                     )}
-                    {/* {getVideoCats} */}
+                    <div className='w-full'>
+                        {getVideoCats}
+                    </div>
                 </div>
             </Main>
         </div>

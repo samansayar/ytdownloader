@@ -39,6 +39,8 @@ const NavBar = () => {
 
   }, [setcategory, setchannel])
 
+  if (!category && !channel) return <div>Loading....</div>;
+
   return (
     <div style={{ direction: 'rtl' }} className="w-full py-2 shadow  h-[65px] flex justify-between items-center px-5">
       {/* Button Add video */}
